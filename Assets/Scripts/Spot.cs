@@ -19,7 +19,7 @@ public class Spot : MonoBehaviour
 
     private void Awake()
     {
-        GetComponentInParent<BoardManager>().RegisterSlot(this);
+        GetComponentInParent<BoardController>().RegisterSlot(this);
     }
 
     public Symbol CurrentSymbol
