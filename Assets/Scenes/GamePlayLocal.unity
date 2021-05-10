@@ -1537,7 +1537,7 @@ GameObject:
   - component: {fileID: 535889494}
   - component: {fileID: 535889493}
   m_Layer: 0
-  m_Name: UI_MANAGER
+  m_Name: UI_Manager
   m_TagString: Untagged
   m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -4153,7 +4153,7 @@ GameObject:
   - component: {fileID: 1293576991}
   - component: {fileID: 1293576990}
   m_Layer: 0
-  m_Name: WHERE_AM_I
+  m_Name: WhereAmI
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -4942,7 +4942,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1516283964
 Transform:
   m_ObjectHideFlags: 0
@@ -6119,7 +6119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1790352754
 Transform:
   m_ObjectHideFlags: 0

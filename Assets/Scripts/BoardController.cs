@@ -63,8 +63,8 @@ public class BoardController : MonoBehaviour
             return;
         }
 
-        BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? choosePlayer1 : choosePlayer2;
-        //BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? BoardSymbol.Circle : BoardSymbol.Cross;
+        //BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? choosePlayer1 : choosePlayer2;
+        BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? BoardSymbol.Circle : BoardSymbol.Cross;
         OnUpdateBoard?.Invoke(line, column, symbolToSet);
 
         _board[line, column] = symbolToSet;
@@ -83,7 +83,7 @@ public class BoardController : MonoBehaviour
         if (winner == BoardSymbol.None)
         {
             print("Ninguem venceu");
-        }
+        }        
     }
 
     public void UpdateBoardVisuals(int line, int column, BoardSymbol symbol)
