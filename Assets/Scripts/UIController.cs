@@ -51,24 +51,22 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         GameModeController.Instance.OnHostStarted += OnHostStarted;
-        GameModeController.Instance.OnHostChoose += OnHostChoose;
+        //GameModeController.Instance.OnHostChoose += OnHostChoose;
         GameModeController.Instance.OnClientStarted += OnClienteStarted;
         GameModeController.Instance.OnClientConnected += OnClienteConnected;
-        GameModeController.Instance.OnClientChoose += OnClientChoose;
+        //GameModeController.Instance.OnClientChoose += OnClientChoose;
 
         GoToScreen(UIScreen.Title);
     }
     
 
     private void OnHostStarted()
-    {       
-        //GoToScreen(UIScreen.Choose);
+    {  
         GoToScreen(UIScreen.Lobby);
     }    
 
     private void OnClienteStarted()
-    {        
-        //GoToScreen(UIScreen.Choose);
+    {  
         GoToScreen(UIScreen.Game);
     }
     private void OnClienteConnected()
@@ -76,7 +74,7 @@ public class UIController : MonoBehaviour
         GoToScreen(UIScreen.Game);
     }
 
-    private void OnHostChoose()
+    /*private void OnHostChoose()
     {
         GoToScreen(UIScreen.Lobby);
     }
@@ -84,7 +82,7 @@ public class UIController : MonoBehaviour
     private void OnClientChoose()
     {
         GoToScreen(UIScreen.Lobby);
-    }    
+    }*/    
 
     public void GoToScreen(UIScreen screem)
     {
@@ -104,7 +102,7 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public void InputChoose()
+    /*public void InputChoose()
     {
         if (hostStart)
         {
@@ -119,6 +117,6 @@ public class UIController : MonoBehaviour
             print("6");
         }
 
-    }
+    }*/
 
 }

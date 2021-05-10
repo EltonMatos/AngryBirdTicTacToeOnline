@@ -14,31 +14,38 @@ public class BoardController : MonoBehaviour
 {
     public static BoardController Instance { get; private set; }
 
-    public Action<int, int, BoardSymbol> OnUpdateBoard;
-
-    /*private int _currentPlayerIndex;
-    private ulong _currentPlayerId => _playerIds[_currentPlayerIndex];
-    private readonly List<ulong> _playerIds = new List<ulong>();*/
+    public Action<int, int, BoardSymbol> OnUpdateBoard;    
 
     private Spot[,] _slots = new Spot[3, 3];
-    private BoardSymbol[,] _board = new BoardSymbol[3, 3];    
+    private BoardSymbol[,] _board = new BoardSymbol[3, 3];
+
+    private int BoardSize = 3;
+
+    //private int playerChoose = 0;
+    private BoardSymbol choosePlayer1, choosePlayer2;
 
     private void Awake()
     {
         Instance = this;
     }
 
+    public void ChoosePlayerBird()
+    {
+        print("Bird");
+        choosePlayer1 = BoardSymbol.Cross;
+        choosePlayer2 = BoardSymbol.Circle;
+    }
+    public void ChoosePlayerPig()
+    {
+        print("pig");
+        choosePlayer1 = BoardSymbol.Circle;
+        choosePlayer2 = BoardSymbol.Cross;
+    }
+
     public void RegisterSlot(Spot slot)
     {
         _slots[slot.Line, slot.Column] = slot;
-    }
-
-    /*public void AddPlayer(ulong playerID)
-    {        
-        _playerIds.Add(playerID);
-
-        Debug.LogFormat("Player added to the game: {0}", playerID);
-    }*/
+    }    
 
     public void MakePlay(ulong playerId, int line, int column)
     {
@@ -56,18 +63,106 @@ public class BoardController : MonoBehaviour
             return;
         }
 
-        BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? BoardSymbol.Circle : BoardSymbol.Cross;
-        //_slots[line, column].SetSymbol(symbolToSet);
+        BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? choosePlayer1 : choosePlayer2;
+        //BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? BoardSymbol.Circle : BoardSymbol.Cross;
         OnUpdateBoard?.Invoke(line, column, symbolToSet);
 
         _board[line, column] = symbolToSet;
 
         PlayerController.Instance._currentPlayerIndex = 1 - PlayerController.Instance._currentPlayerIndex;
+
+        var winner = GetWinner();
+        if(winner == BoardSymbol.Circle)
+        {
+            print("Bird vencedor");
+        }
+        if (winner == BoardSymbol.Cross)
+        {
+            print("Pig vencedor");
+        }
+        if (winner == BoardSymbol.None)
+        {
+            print("Ninguem venceu");
+        }
     }
 
     public void UpdateBoardVisuals(int line, int column, BoardSymbol symbol)
     {
         _slots[line, column].SetSymbol(symbol);
+    }    
+
+    public BoardSymbol GetWinner()
+    {
+        // horizontal
+        for (int line = 0; line < BoardSize; line++)
+        {
+            if (_board[line, 0] == BoardSymbol.None)
+            {
+                continue;
+            }
+
+            int symbolCount = 0;
+            for (int c = 0; c < BoardSize; c++)
+            {
+                if (_board[line, c] == _board[line, 0])
+                {
+                    symbolCount++;
+                }
+            }
+
+            if (symbolCount == BoardSize)
+            {
+                return _board[line, 0];
+            }
+        }
+
+        // vertical
+        for (int column = 0; column < BoardSize; column++)
+        {
+            if (_board[0, column] == BoardSymbol.None)
+            {
+                continue;
+            }
+
+            int symbolCount = 0;
+            for (int l = 0; l < BoardSize; l++)
+            {
+                if (_board[l, column] == _board[0, column])
+                {
+                    symbolCount++;
+                }
+            }
+
+            if (symbolCount == BoardSize)
+            {
+                return _board[0, column];
+            }
+        }
+
+        // diagonal
+        int diagonalCount1 = 0;
+        int diagonalCount2 = 0;
+        for (int index = 0; index < BoardSize; index++)
+        {
+            if (_board[index, index] == _board[0, 0] && _board[0, 0] != BoardSymbol.None)
+            {
+                diagonalCount1++;
+            }
+            if (_board[index, BoardSize - index - 1] == _board[0, BoardSize - 1] && _board[0, BoardSize - 1] != BoardSymbol.None)
+            {
+                diagonalCount2++;
+            }
+        }
+        if (diagonalCount1 == BoardSize)
+        {
+            return _board[0, 0];
+        }
+        if (diagonalCount2 == BoardSize)
+        {
+            return _board[0, BoardSize - 1];
+        }
+
+        return BoardSymbol.None;
     }
 
 

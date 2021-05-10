@@ -7,9 +7,7 @@ using UnityEngine;
 public class NetworkPlayer : NetworkBehaviour
 {
 
-    public LayerMask PickingSlot;
-    public Symbol[,] boardSymbol;
-	public Symbol newSymbol = Symbol.N;
+    public LayerMask PickingSlot;    
 
     public Spot slot;
     
@@ -38,8 +36,7 @@ public class NetworkPlayer : NetworkBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);                
                 slot = hit.transform.GetComponent<Spot>();                
                 if (hit.collider.CompareTag("PickingSlot"))
-                {                    
-                    //BoardController.Instance.RegisterSlot(slot);
+                {  
                     MakePlayServerRpc(slot.Line, slot.Column);
                 }
             }            
