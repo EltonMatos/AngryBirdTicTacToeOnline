@@ -25,6 +25,7 @@ public class NetworkPlayer : NetworkBehaviour
 
     private void UpdateBoard(int line, int column, BoardSymbol symbol)
     {
+        //BoardController.Instance.RegisterSlot(slotClient);
         UpdateBoardClientRpc(line, column, symbol);
     }
 
@@ -35,34 +36,32 @@ public class NetworkPlayer : NetworkBehaviour
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
-               
+                RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);                
                 slotServer = hit.transform.GetComponent<Spot>();
                 if (hit.collider.CompareTag("PickingSlot") && hit.collider != null)
                 {
-                    print("Line: " + slotServer.Line + "Column " + slotServer.Column);
-                    print("1");
+                    print("Line: " + slotServer.Line + "Column " + slotServer.Column);                    
                     BoardController.Instance.RegisterSlot(slotServer);
                     MakePlayServerRpc(slotServer.Line, slotServer.Column);
                 }
             }            
         }
-        if (IsClient)
-        {
+        /*else
+        {            
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
+                print("1");
                 Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 RaycastHit2D hit2 = Physics2D.Raycast(worldPoint, Vector2.zero);
-
                 slotClient = hit2.transform.GetComponent<Spot>();
                 if (hit2.collider.CompareTag("PickingSlot") && hit2.collider != null)
                 {                   
-                    print("2");
+                    
                     BoardController.Instance.RegisterSlot(slotClient);
                     
                 }
             }
-        }
+        }*/
     }
 
    
@@ -75,7 +74,8 @@ public class NetworkPlayer : NetworkBehaviour
     [ClientRpc]
     public void UpdateBoardClientRpc(int line, int column, BoardSymbol symbol)
     {
-        print("5");
+        //BoardController.Instance.RegisterSlot(slotClient);
+
         BoardController.Instance.UpdateBoardVisuals(line, column, symbol);
     }
 }

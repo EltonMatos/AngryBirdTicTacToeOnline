@@ -46,7 +46,7 @@ public class BoardController : MonoBehaviour
 
         if (playerId != _currentPlayerId)
         {
-            Debug.LogFormat("But it1s not their turn! ({0} != {1}", playerId, _currentPlayerId);
+            Debug.LogFormat("But it1s not their turn! ({0} != {1})", playerId, _currentPlayerId);
             return;
         }
 
