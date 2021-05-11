@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public enum UIScreen
 {
     Title,
+    LAN,
+    Online,
     Lobby,
     Choose,
     Game,
@@ -51,10 +53,8 @@ public class UIController : MonoBehaviour
     private void Start()
     {
         GameModeController.Instance.OnHostStarted += OnHostStarted;
-        //GameModeController.Instance.OnHostChoose += OnHostChoose;
         GameModeController.Instance.OnClientStarted += OnClienteStarted;
         GameModeController.Instance.OnClientConnected += OnClienteConnected;
-        //GameModeController.Instance.OnClientChoose += OnClientChoose;
 
         GoToScreen(UIScreen.Title);
     }
@@ -73,16 +73,7 @@ public class UIController : MonoBehaviour
     {
         GoToScreen(UIScreen.Game);
     }
-
-    /*private void OnHostChoose()
-    {
-        GoToScreen(UIScreen.Lobby);
-    }
-
-    private void OnClientChoose()
-    {
-        GoToScreen(UIScreen.Lobby);
-    }*/    
+    
 
     public void GoToScreen(UIScreen screem)
     {
@@ -102,21 +93,6 @@ public class UIController : MonoBehaviour
         }
     }
 
-    /*public void InputChoose()
-    {
-        if (hostStart)
-        {
-            OnHostChoose();
-            hostStart = false;
-            print("5");
-        }
-        if (clientStart)
-        {
-            OnClientChoose();
-            clientStart = false;
-            print("6");
-        }
 
-    }*/
 
 }

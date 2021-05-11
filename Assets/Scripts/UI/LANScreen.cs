@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TitleScreen : MonoBehaviour
+public class LANScreen : MonoBehaviour
 {
     public InputField ServerAddressField;
 
