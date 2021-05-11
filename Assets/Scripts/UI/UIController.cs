@@ -10,8 +10,7 @@ public enum UIScreen
     Title,
     LAN,
     Online,
-    Lobby,
-    Choose,
+    Lobby,    
     Game,
     EndGame
 }

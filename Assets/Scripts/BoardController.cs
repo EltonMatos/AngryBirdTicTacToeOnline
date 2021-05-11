@@ -21,6 +21,9 @@ public class BoardController : MonoBehaviour
 
     private int BoardSize = 3;
 
+    public int statusFinalGame = 0;
+    public bool statusGame = true;
+
     //private int playerChoose = 0;
     private BoardSymbol choosePlayer1, choosePlayer2;
 
@@ -49,40 +52,47 @@ public class BoardController : MonoBehaviour
 
     public void MakePlay(ulong playerId, int line, int column)
     {
-        Debug.LogFormat("Player {0} wants to make play at {1}, {2}", playerId, line, column);
-
-        if (playerId != PlayerController.Instance._currentPlayerId)
+        if(statusGame == true)
         {
-            Debug.LogFormat("But it1s not their turn! ({0} != {1})", playerId, PlayerController.Instance._currentPlayerId);
-            return;
+            Debug.LogFormat("Player {0} wants to make play at {1}, {2}", playerId, line, column);
+
+            if (playerId != PlayerController.Instance._currentPlayerId)
+            {
+                Debug.LogFormat("But it1s not their turn! ({0} != {1})", playerId, PlayerController.Instance._currentPlayerId);
+                return;
+            }
+
+            if (_board[line, column] != BoardSymbol.None)
+            {
+                Debug.LogFormat("But the space is not empty! (Current: {0})", _board[line, column]);
+                return;
+            }
+
+            //BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? choosePlayer1 : choosePlayer2;
+            BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? BoardSymbol.Circle : BoardSymbol.Cross;
+            OnUpdateBoard?.Invoke(line, column, symbolToSet);
+
+            _board[line, column] = symbolToSet;
+
+            PlayerController.Instance._currentPlayerIndex = 1 - PlayerController.Instance._currentPlayerIndex;
         }
-
-        if(_board[line, column] != BoardSymbol.None)
-        {
-            Debug.LogFormat("But the space is not empty! (Current: {0})", _board[line, column]);
-            return;
-        }
-
-        //BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? choosePlayer1 : choosePlayer2;
-        BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? BoardSymbol.Circle : BoardSymbol.Cross;
-        OnUpdateBoard?.Invoke(line, column, symbolToSet);
-
-        _board[line, column] = symbolToSet;
-
-        PlayerController.Instance._currentPlayerIndex = 1 - PlayerController.Instance._currentPlayerIndex;
 
         var winner = GetWinner();
         if(winner == BoardSymbol.Circle)
         {
-            print("Bird vencedor");
+            statusFinalGame = 2;
+            //UIMANAGER.instance.AtivarAnimacao();
+            statusGame = false;
         }
         if (winner == BoardSymbol.Cross)
         {
             print("Pig vencedor");
+            statusGame = false;
         }
         if (winner == BoardSymbol.None)
         {
             print("Ninguem venceu");
+            statusGame = false;
         }        
     }
 

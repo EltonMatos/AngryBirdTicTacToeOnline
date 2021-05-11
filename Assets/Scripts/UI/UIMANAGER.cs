@@ -56,7 +56,7 @@ public class UIMANAGER : MonoBehaviour
     void Start()
     {
         //fase LevelMenu
-        if (WhereAmI.instance.fase == 2)
+        if (WhereAmI.instance.fase == 5)
         {
             BTN_Easy = GameObject.FindWithTag("easymode").GetComponent<Button>();
             BTN_Normal = GameObject.FindWithTag("normalmode").GetComponent<Button>();
@@ -113,9 +113,13 @@ public class UIMANAGER : MonoBehaviour
 
     public void LevelMenu()
     {
-        SceneManager.LoadScene("LevelMenu");                
+        SceneManager.LoadScene("GamePlayLocal");                
     }
     
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 
     public void difficultEasy()
     {
@@ -148,6 +152,40 @@ public class UIMANAGER : MonoBehaviour
 
     public void AtivarAnimacao()
     {
+        if (BoardController.Instance.statusFinalGame == 1)
+        {
+            //derrota
+            //AudioManager.instance.audioS.Stop();
+            panelLoseAnim.Play("MenuLoseAnim");
+        }
+        if (BoardController.Instance.statusFinalGame == 2)
+        {
+            //vitoria
+            //AudioManager.instance.audioS.Stop();
+            panelWinAnim.Play("MenuWinAnim");
+        }
+        if (BoardController.Instance.statusFinalGame == 3)
+        {
+            //empate
+            //AudioManager.instance.audioS.Stop();
+            panelTiedAnim.Play("MenuTiedAnim");
+        }
+        if (BoardController.Instance.statusFinalGame == 4)
+        {
+            //pigWin
+            //AudioManager.instance.audioS.Stop();
+            panelPigWinAnim.Play("MenuPigWinAnim");
+        }
+        else if (BoardManager.Instance.getStatus() == 5)
+        {
+            //birdWin
+            //AudioManager.instance.audioS.Stop();
+            panelBirdWinAnim.Play("MenuBirdWinAnim");
+        }
+    }
+
+    /*public void AtivarAnimacao()
+    {
         if (BoardManager.Instance.getStatus() == 1)
         {
             //derrota
@@ -178,6 +216,6 @@ public class UIMANAGER : MonoBehaviour
             AudioManager.instance.audioS.Stop();           
             panelBirdWinAnim.Play("MenuBirdWinAnim");
         }
-    }    
+    }*/
 
 }
