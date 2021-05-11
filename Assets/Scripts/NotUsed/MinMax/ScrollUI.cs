@@ -9,13 +9,13 @@ public class ScrollUI : MonoBehaviour
 
     void Update()
     {
-        if (WhereAmI.instance.fase == 0)
+        if (WhereAmI.instance.phase == 0)
         {
             back.uvRect = new Rect(0.05f * Time.time, 0, 1, 1);
             front.uvRect = new Rect(0.08f * Time.time, 0, 1, 1);
         }
 
-        if (WhereAmI.instance.fase == 1 || WhereAmI.instance.fase == 2)
+        if (WhereAmI.instance.phase == 1 || WhereAmI.instance.phase == 2)
         {
             back.uvRect = new Rect(0.05f * Time.time, 0, 1, 1);
         }

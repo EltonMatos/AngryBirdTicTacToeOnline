@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class WhereAmI : MonoBehaviour
 {
-    public int fase = -1;  
+    public int phase = -1;  
 
     public static WhereAmI instance;
 
@@ -27,7 +27,7 @@ public class WhereAmI : MonoBehaviour
 
     void VerificaFase(Scene cena, LoadSceneMode modo)
     {
-        fase = SceneManager.GetActiveScene().buildIndex;
+        phase = SceneManager.GetActiveScene().buildIndex;
     }
 
     

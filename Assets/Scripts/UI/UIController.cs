@@ -18,9 +18,7 @@ public class UIController : MonoBehaviour
 {
     public static UIController Instance { get; private set; }
 
-    public bool clientStart = false;
-    public bool hostStart = false;
-
+    public bool connected = false;
 
     [Serializable]
     public struct ScreenData
@@ -55,7 +53,7 @@ public class UIController : MonoBehaviour
         GameModeController.Instance.OnClientStarted += OnClienteStarted;
         GameModeController.Instance.OnClientConnected += OnClienteConnected;
 
-        GoToScreen(UIScreen.Title);
+        GoToScreen(UIScreen.Title);        
     }
     
 
@@ -70,6 +68,7 @@ public class UIController : MonoBehaviour
     }
     private void OnClienteConnected()
     {
+        connected = true;
         GoToScreen(UIScreen.Game);
     }
     

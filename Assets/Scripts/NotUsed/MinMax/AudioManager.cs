@@ -31,7 +31,7 @@ public class AudioManager : MonoBehaviour
 
         if (!audioS.isPlaying)
         {            
-            if (WhereAmI.instance.fase >= 2)
+            if (WhereAmI.instance.phase >= 2)
             {
                 audioS.clip = clip[0];
                 audioS.Play();

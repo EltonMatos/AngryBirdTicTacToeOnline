@@ -6,10 +6,11 @@ using UnityEngine.UI;
 
 
 
-public class UIMANAGER : MonoBehaviour
+public class UiManager : MonoBehaviour
 {
-    public static UIMANAGER instance;
+    public static UiManager instance;
 
+    [SerializeField]
     private Animator panelWinAnim, panelLoseAnim, panelPigWinAnim, panelBirdWinAnim, panelTiedAnim;
     private Button winBtnMenu, winBtnAgain;
     private Button loseBtnMenu, loseBtnAgain;
@@ -35,10 +36,10 @@ public class UIMANAGER : MonoBehaviour
 
     void Carrega(Scene cena, LoadSceneMode modo)
     {
-        if(WhereAmI.instance.fase == 3)
+        if (WhereAmI.instance.phase == 3)
         {
             //painel
-            panelWinAnim = GameObject.Find("Menu_Win").GetComponent<Animator>();
+            //panelWinAnim = GameObject.Find("MenuWin").GetComponent<Animator>();
             panelLoseAnim = GameObject.Find("Menu_Lose").GetComponent<Animator>();
             panelPigWinAnim = GameObject.Find("Menu_Pig").GetComponent<Animator>();
             panelBirdWinAnim = GameObject.Find("Menu_Bird").GetComponent<Animator>();
@@ -54,9 +55,10 @@ public class UIMANAGER : MonoBehaviour
     }
 
     void Start()
-    {
+    {        
+
         //fase LevelMenu
-        if (WhereAmI.instance.fase == 5)
+        if (WhereAmI.instance.phase == 5)
         {
             BTN_Easy = GameObject.FindWithTag("easymode").GetComponent<Button>();
             BTN_Normal = GameObject.FindWithTag("normalmode").GetComponent<Button>();
@@ -66,8 +68,13 @@ public class UIMANAGER : MonoBehaviour
 
     void Update()
     {
+        if (WhereAmI.instance.phase == 1 && UIController.Instance.connected == true)
+        {            
+            panelWinAnim = GameObject.Find("MenuWin").GetComponent<Animator>();
+        }
+
         //fase PlayGame
-        if (WhereAmI.instance.fase == 3)
+        if (WhereAmI.instance.phase == 3)
         {
             AtivarAnimacao();
         }        
@@ -162,9 +169,9 @@ public class UIMANAGER : MonoBehaviour
         {
             //vitoria
             //AudioManager.instance.audioS.Stop();
-            panelWinAnim.Play("MenuWinAnim");
+            panelWinAnim.Play("MenuWin");
         }
-        if (BoardController.Instance.statusFinalGame == 3)
+        /*if (BoardController.Instance.statusFinalGame == 3)
         {
             //empate
             //AudioManager.instance.audioS.Stop();
@@ -181,7 +188,7 @@ public class UIMANAGER : MonoBehaviour
             //birdWin
             //AudioManager.instance.audioS.Stop();
             panelBirdWinAnim.Play("MenuBirdWinAnim");
-        }
+        }*/
     }
 
     /*public void AtivarAnimacao()

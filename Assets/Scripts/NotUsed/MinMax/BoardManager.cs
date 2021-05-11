@@ -54,19 +54,19 @@ public class BoardManager : MonoBehaviour
         }*/
         Instance = this;
 
-        if (UIMANAGER.instance.getDificuldade() == 2)
+        if (UiManager.instance.getDificuldade() == 2)
         {
             level = Difficult.hard;
         }
-        if (UIMANAGER.instance.getDificuldade() == 3)
+        if (UiManager.instance.getDificuldade() == 3)
         {
             level = Difficult.normal;
         }
-        if (UIMANAGER.instance.getDificuldade() == 4)
+        if (UiManager.instance.getDificuldade() == 4)
         {
             level = Difficult.pvpLocal;
         }
-        if (UIMANAGER.instance.getDificuldade() == 5)
+        if (UiManager.instance.getDificuldade() == 5)
         {
             level = Difficult.pvpOn;
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CriaPassaroUi : MonoBehaviour {
+public class BreedBird : MonoBehaviour {
 
     public GameObject[] passaros;
 

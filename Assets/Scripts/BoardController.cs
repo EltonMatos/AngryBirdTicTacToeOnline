@@ -80,19 +80,20 @@ public class BoardController : MonoBehaviour
         var winner = GetWinner();
         if(winner == BoardSymbol.Circle)
         {
+            print("Bird vencedor");
             statusFinalGame = 2;
-            //UIMANAGER.instance.AtivarAnimacao();
-            statusGame = false;
+            UiManager.instance.AtivarAnimacao();
+            //statusGame = false;
         }
         if (winner == BoardSymbol.Cross)
         {
             print("Pig vencedor");
-            statusGame = false;
+            //statusGame = false;
         }
         if (winner == BoardSymbol.None)
         {
             print("Ninguem venceu");
-            statusGame = false;
+            //statusGame = false;
         }        
     }
 
