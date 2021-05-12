@@ -32,7 +32,7 @@
             <e p="MinMax" t="Include">
               <e p="AudioManager.cs" t="Include" />
               <e p="BoardManager.cs" t="Include" />
-              <e p="CriaPassaroUi.cs" t="Include" />
+              <e p="BreedBird.cs" t="Include" />
               <e p="FirstPlay.cs" t="Include" />
               <e p="MinMax.cs" t="Include" />
               <e p="MorteArea.cs" t="Include" />
@@ -46,6 +46,7 @@
           <e p="Spot.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="LANScreen.cs" t="Include" />
+            <e p="PhotonScreen.cs" t="Include" />
             <e p="TitleScreen.cs" t="Include" />
             <e p="UIController.cs" t="Include" />
             <e p="UIMANAGER.cs" t="Include" />
