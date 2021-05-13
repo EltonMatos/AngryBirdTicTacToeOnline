@@ -16,7 +16,6 @@ public class GameModeController : MonoBehaviour
     public event Action OnHostStarted;
     public event Action OnClientStarted;
     public event Action OnClientConnected;
-
     public event Action OnDisconnected;
     
     //public event Action OnClientDisconnected;
@@ -100,6 +99,8 @@ public class GameModeController : MonoBehaviour
     public void Disconnect()
     {
         BoardController.Instance.CleanBoard();
+        PlayerController.Instance.CleanPlayerController();
+        UIController.Instance.ReStartActions();
         OnDisconnected?.Invoke();
     }
 

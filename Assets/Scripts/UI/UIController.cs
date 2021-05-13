@@ -102,5 +102,14 @@ public class UIController : MonoBehaviour
         return _screens.TryGetValue(screen, out var rootObject) ? rootObject : null;
     }
 
+    public void ReStartActions()
+    {
+        GameModeController.Instance.OnHostStarted += OnHostStarted;
+        GameModeController.Instance.OnClientStarted += OnClienteStarted;
+        GameModeController.Instance.OnClientConnected += OnClienteConnected;
+        GameModeController.Instance.OnDisconnected += OnClientDisconnected;
+        GoToScreen(UIScreen.Title);   
+    }
+
 
 }

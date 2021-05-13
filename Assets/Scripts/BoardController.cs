@@ -36,8 +36,18 @@ public class BoardController : MonoBehaviour
     public void CleanBoard()
     {
         _numberOfPlays = 0;
-        _slots = new Spot[3, 3];
+        CleanSlots();
         _board = new BoardSymbol[3, 3];
+    }
+
+    public void CleanSlots()
+    {
+        for (int line = 0; line < BoardSize; line++) {
+            for (int column = 0; column < BoardSize; column++)
+            {
+                _slots[line, column].CleanSymbol();
+            }
+        }
     }
 
     public void RegisterSlot(Spot slot)

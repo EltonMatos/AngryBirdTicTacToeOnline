@@ -47,4 +47,10 @@ public class Spot : MonoBehaviour
         ImageCross.SetActive(symbol == BoardSymbol.Circle);
         ImageCircle.SetActive(symbol == BoardSymbol.Cross);
     }
+
+    public void CleanSymbol()
+    {
+        ImageCross.SetActive(false);
+        ImageCircle.SetActive(false);
+    }
 }

@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     
     public ulong _currentPlayerId => _playerIds[_currentPlayerIndex];
     
-    public readonly List<ulong> _playerIds = new List<ulong>();
+    public List<ulong> _playerIds = new List<ulong>();
     
 
     private void Awake()
@@ -25,5 +25,11 @@ public class PlayerController : MonoBehaviour
         _playerIds.Add(playerID );
 
         Debug.LogFormat("Player added to the game: {0}", playerID);
+    }
+
+    public void CleanPlayerController()
+    {
+        _playerIds = new List<ulong>();
+        _currentPlayerIndex = 0;
     }
 }

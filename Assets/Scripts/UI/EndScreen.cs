@@ -9,15 +9,13 @@ public class EndScreen : MonoBehaviour
     public Text WinMessage;
     public Text LoseMessage;
     public Text DrawMessage;
+    
 
-
-    public void Update()
+    public void DisconnectOnClick()
     {
-        if (Input.anyKey)
-        {
-            GameModeController.Instance.Disconnect();
-        }
+        GameModeController.Instance.Disconnect();
     }
+
 
     public void ShowWin()
     {
