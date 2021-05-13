@@ -14,7 +14,8 @@ public class BoardController : MonoBehaviour
 {
     public static BoardController Instance { get; private set; }
 
-    public Action<int, int, BoardSymbol> OnUpdateBoard;    
+    public Action<int, int, BoardSymbol> OnUpdateBoard;   
+    public Action<BoardSymbol> OnMatchEnd; 
 
     private Spot[,] _slots = new Spot[3, 3];
     private BoardSymbol[,] _board = new BoardSymbol[3, 3];
@@ -24,25 +25,19 @@ public class BoardController : MonoBehaviour
     public int statusFinalGame = 0;
     public bool statusGame = true;
 
-    //private int playerChoose = 0;
-    private BoardSymbol choosePlayer1, choosePlayer2;
-
+    private int _numberOfPlays;
+    
     private void Awake()
     {
         Instance = this;
+        _numberOfPlays = 0;
     }
 
-    public void ChoosePlayerBird()
+    public void CleanBoard()
     {
-        print("Bird");
-        choosePlayer1 = BoardSymbol.Cross;
-        choosePlayer2 = BoardSymbol.Circle;
-    }
-    public void ChoosePlayerPig()
-    {
-        print("pig");
-        choosePlayer1 = BoardSymbol.Circle;
-        choosePlayer2 = BoardSymbol.Cross;
+        _numberOfPlays = 0;
+        _slots = new Spot[3, 3];
+        _board = new BoardSymbol[3, 3];
     }
 
     public void RegisterSlot(Spot slot)
@@ -68,7 +63,6 @@ public class BoardController : MonoBehaviour
                 return;
             }
 
-            //BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? choosePlayer1 : choosePlayer2;
             BoardSymbol symbolToSet = PlayerController.Instance._currentPlayerIndex == 0 ? BoardSymbol.Circle : BoardSymbol.Cross;
             OnUpdateBoard?.Invoke(line, column, symbolToSet);
 
@@ -81,20 +75,58 @@ public class BoardController : MonoBehaviour
         if(winner == BoardSymbol.Circle)
         {
             print("Bird vencedor");
-            statusFinalGame = 2;
-            UiManager.instance.AtivarAnimacao();
-            //statusGame = false;
+            OnMatchEnd?.Invoke(BoardSymbol.Circle); 
         }
         if (winner == BoardSymbol.Cross)
         {
             print("Pig vencedor");
-            //statusGame = false;
+            OnMatchEnd?.Invoke(BoardSymbol.Cross);
         }
         if (winner == BoardSymbol.None)
         {
             print("Ninguem venceu");
-            //statusGame = false;
-        }        
+        }
+        
+        _numberOfPlays += 1;
+        if (_numberOfPlays == BoardSize * BoardSize)
+        {
+            OnMatchEnd?.Invoke(BoardSymbol.None);
+        }
+
+    }
+
+    //Method only called after knowing if the game is already over;
+    public bool IWin(ulong playerId, BoardSymbol winnerSymbol)
+    {
+        BoardSymbol mySymbol = PlayerController.Instance._playerIds.IndexOf(playerId) == 0 ? BoardSymbol.Circle : BoardSymbol.Cross;
+        if (mySymbol == winnerSymbol)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void MatchEnd(ulong playerId, BoardSymbol winnerSymbol)
+    {
+        Debug.Log("MatchEnd: " + playerId);
+        _numberOfPlays = 0;  
+        EndScreen endScreen = UIController.Instance.GetScreen(UIScreen.EndGame).GetComponent<EndScreen>();
+        if (winnerSymbol == BoardSymbol.None)
+        {
+            endScreen.ShowDraw();
+        }
+        else if (IWin(playerId, winnerSymbol))
+        {
+            endScreen.ShowWin();
+        }
+        else
+        {
+            endScreen.ShowLose();
+        }
+
+        UIController.Instance.GoToScreen(UIScreen.EndGame);
+        
     }
 
     public void UpdateBoardVisuals(int line, int column, BoardSymbol symbol)
@@ -172,7 +204,10 @@ public class BoardController : MonoBehaviour
         {
             return _board[0, BoardSize - 1];
         }
+        
+        
 
+        
         return BoardSymbol.None;
     }
 

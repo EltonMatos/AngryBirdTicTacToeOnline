@@ -19,12 +19,19 @@ public class NetworkPlayer : NetworkBehaviour
         {
             PlayerController.Instance.AddPlayer(OwnerClientId);
             BoardController.Instance.OnUpdateBoard += UpdateBoard;
+            BoardController.Instance.OnMatchEnd += MatchEnd;
         }           
     }
 
     private void UpdateBoard(int line, int column, BoardSymbol symbol)
     {        
         UpdateBoardClientRpc(line, column, symbol);
+    }
+
+
+    private void MatchEnd(BoardSymbol symbol)
+    {
+        MatchEndClientRpc(symbol);
     }
 
     private void Update()
@@ -55,5 +62,11 @@ public class NetworkPlayer : NetworkBehaviour
     public void UpdateBoardClientRpc(int line, int column, BoardSymbol symbol)
     {
         BoardController.Instance.UpdateBoardVisuals(line, column, symbol);
+    }
+    
+    [ClientRpc]
+    public void MatchEndClientRpc(BoardSymbol symbol)
+    {
+        BoardController.Instance.MatchEnd(NetworkManager.LocalClientId, symbol);
     }
 }

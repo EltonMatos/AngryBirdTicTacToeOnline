@@ -14,10 +14,12 @@ public class GameModeController : MonoBehaviour
     public static GameModeController Instance { get; private set;}
     
     public event Action OnHostStarted;
-    public event Action OnHostChoose;
     public event Action OnClientStarted;
-    public event Action OnClientChoose;
     public event Action OnClientConnected;
+
+    public event Action OnDisconnected;
+    
+    //public event Action OnClientDisconnected;
 
     private void Awake()
     {
@@ -27,7 +29,9 @@ public class GameModeController : MonoBehaviour
     public void StartHost()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
-        NetworkManager.Singleton.StartHost();        
+        
+        NetworkManager.Singleton.StartHost();   
+        OnDisconnected += StopHost;
         OnHostStarted?.Invoke();
     }
 
@@ -44,9 +48,10 @@ public class GameModeController : MonoBehaviour
     public void StartClient(string serverAddress)
     {
         var netManager = NetworkManager.Singleton;
+        
         netManager.GetComponent<UNetTransport>().ConnectAddress = serverAddress;
         netManager.StartClient();
-
+        OnDisconnected += StopClient;
         OnClientStarted?.Invoke();
     }
     
@@ -57,7 +62,8 @@ public class GameModeController : MonoBehaviour
         netManager.GetComponent<PhotonRealtimeTransport>().RoomName = roomName;
         
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
-        NetworkManager.Singleton.StartHost();        
+        NetworkManager.Singleton.StartHost();  
+        OnDisconnected += StopHost;
         OnHostStarted?.Invoke();
    
     }
@@ -66,7 +72,7 @@ public class GameModeController : MonoBehaviour
         var netManager = NetworkManager.Singleton;
         netManager.GetComponent<PhotonRealtimeTransport>().RoomName = roomName;
         netManager.StartClient();
-
+        OnDisconnected += StopClient;
         OnClientStarted?.Invoke();
     }
 
@@ -80,6 +86,21 @@ public class GameModeController : MonoBehaviour
     {
         NetworkManager.Singleton.NetworkConfig.NetworkTransport =
             NetworkManager.Singleton.GetComponent<UNetTransport>();
+    }
+    
+    public void StopClient()
+    {
+        NetworkManager.Singleton.StopClient();
+    }
+    public void StopHost()
+    {
+        NetworkManager.Singleton.StopHost();
+    }
+
+    public void Disconnect()
+    {
+        BoardController.Instance.CleanBoard();
+        OnDisconnected?.Invoke();
     }
 
 }

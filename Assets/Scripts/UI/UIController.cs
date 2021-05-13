@@ -52,7 +52,7 @@ public class UIController : MonoBehaviour
         GameModeController.Instance.OnHostStarted += OnHostStarted;
         GameModeController.Instance.OnClientStarted += OnClienteStarted;
         GameModeController.Instance.OnClientConnected += OnClienteConnected;
-
+        GameModeController.Instance.OnDisconnected += OnClientDisconnected;
         GoToScreen(UIScreen.Title);        
     }
     
@@ -71,11 +71,16 @@ public class UIController : MonoBehaviour
         connected = true;
         GoToScreen(UIScreen.Game);
     }
+    private void OnClientDisconnected()
+    {
+        connected = false;
+        GoToScreen(UIScreen.Title);
+    }
     
 
-    public void GoToScreen(UIScreen screem)
+    public void GoToScreen(UIScreen screen)
     {
-        if(_screens.TryGetValue(screem, out var rootObject))
+        if(_screens.TryGetValue(screen, out var rootObject))
         {
             if(_activeScreen != null)
             {
@@ -91,6 +96,11 @@ public class UIController : MonoBehaviour
         }
     }
 
+    
+    public GameObject GetScreen(UIScreen screen)
+    {
+        return _screens.TryGetValue(screen, out var rootObject) ? rootObject : null;
+    }
 
 
 }

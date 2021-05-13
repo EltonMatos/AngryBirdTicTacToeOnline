@@ -45,6 +45,7 @@
           <e p="PlayerController.cs" t="Include" />
           <e p="Spot.cs" t="Include" />
           <e p="UI" t="Include">
+            <e p="EndScreen.cs" t="Include" />
             <e p="LANScreen.cs" t="Include" />
             <e p="PhotonScreen.cs" t="Include" />
             <e p="TitleScreen.cs" t="Include" />
