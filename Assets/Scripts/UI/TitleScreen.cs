@@ -17,4 +17,9 @@ public class TitleScreen : MonoBehaviour
         UIController.Instance.GoToScreen(UIScreen.Online);
     }
 
+    public void MenuStart()
+    {        
+        UIController.Instance.GoToScreen(UIScreen.Title);
+    }
+
 }
