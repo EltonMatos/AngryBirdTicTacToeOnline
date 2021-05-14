@@ -38,6 +38,8 @@ public class BoardController : MonoBehaviour
         _numberOfPlays = 0;
         CleanSlots();
         _board = new BoardSymbol[3, 3];
+        OnUpdateBoard = null;
+        OnMatchEnd = null;
     }
 
     public void CleanSlots()
