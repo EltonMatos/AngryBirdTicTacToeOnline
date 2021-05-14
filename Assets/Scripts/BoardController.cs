@@ -119,7 +119,6 @@ public class BoardController : MonoBehaviour
 
     public void MatchEnd(ulong playerId, BoardSymbol winnerSymbol)
     {
-        Debug.Log("MatchEnd: " + playerId);
         _numberOfPlays = 0;  
         EndScreen endScreen = UIController.Instance.GetScreen(UIScreen.EndGame).GetComponent<EndScreen>();
         if (winnerSymbol == BoardSymbol.None)

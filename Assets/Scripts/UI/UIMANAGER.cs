@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-
+/*
 public class UiManager : MonoBehaviour
 {
     public static UiManager instance;
@@ -188,8 +188,8 @@ public class UiManager : MonoBehaviour
             //birdWin
             //AudioManager.instance.audioS.Stop();
             panelBirdWinAnim.Play("MenuBirdWinAnim");
-        }*/
-    }
+        }
+    }*/
 
     /*public void AtivarAnimacao()
     {
@@ -223,6 +223,6 @@ public class UiManager : MonoBehaviour
             AudioManager.instance.audioS.Stop();           
             panelBirdWinAnim.Play("MenuBirdWinAnim");
         }
-    }*/
+    }
 
-}
+}*/

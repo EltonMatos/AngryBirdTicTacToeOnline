@@ -53,7 +53,7 @@ public class BoardManager : MonoBehaviour
             Destroy(gameObject);
         }*/
         Instance = this;
-
+/*
         if (UiManager.instance.getDificuldade() == 2)
         {
             level = Difficult.hard;
@@ -70,6 +70,7 @@ public class BoardManager : MonoBehaviour
         {
             level = Difficult.pvpOn;
         }
+        */
 
         _tabuleiro = new Symbol[BoardSize, BoardSize];
         _spots = new Spot[BoardSize, BoardSize];

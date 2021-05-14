@@ -28,12 +28,25 @@ public class GameModeController : MonoBehaviour
     public void StartHost()
     {
         NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnectedCallback;
-        
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnectedCallback;
         NetworkManager.Singleton.StartHost();   
         OnDisconnected += StopHost;
         OnHostStarted?.Invoke();
     }
 
+    private void OnClientDisconnectedCallback(ulong clientId)
+    {
+        Debug.LogFormat("Client connected: {0} (is server: {1})", clientId, NetworkManager.Singleton.IsServer);        
+
+        if (NetworkManager.Singleton.IsServer)
+        {
+            if (NetworkManager.Singleton.ConnectedClientsList.Count == 0)
+            {
+                StopHost();
+            }
+        }
+    }
+    
     private void OnClientConnectedCallback(ulong clientId)
     {
         Debug.LogFormat("Client connected: {0} (is server: {1})", clientId, NetworkManager.Singleton.IsServer);        
@@ -89,10 +102,12 @@ public class GameModeController : MonoBehaviour
     
     public void StopClient()
     {
+        Debug.Log("Client Stop");
         NetworkManager.Singleton.StopClient();
     }
     public void StopHost()
     {
+        StopClient();
         NetworkManager.Singleton.StopHost();
     }
 
@@ -100,8 +115,16 @@ public class GameModeController : MonoBehaviour
     {
         BoardController.Instance.CleanBoard();
         PlayerController.Instance.CleanPlayerController();
-        UIController.Instance.ReStartActions();
         OnDisconnected?.Invoke();
+
+        
+        OnHostStarted = null;
+        OnClientStarted = null;
+        OnClientConnected = null;
+        OnDisconnected = null;
+        
+        UIController.Instance.ReStartActions();
+        
     }
 
 }
