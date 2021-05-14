@@ -18,8 +18,6 @@ public class GameModeController : MonoBehaviour
     public event Action OnClientConnected;
     public event Action OnDisconnected;
     
-    //public event Action OnClientDisconnected;
-
     private void Awake()
     {
         Instance = this;
@@ -114,6 +112,7 @@ public class GameModeController : MonoBehaviour
     public void Disconnect()
     {
         BoardController.Instance.CleanBoard();
+        BoardController.Instance.CleanActions();
         PlayerController.Instance.CleanPlayerController();
         OnDisconnected?.Invoke();
 

@@ -9,13 +9,29 @@ public class PhotonScreen : MonoBehaviour
 
     public void StartHost()
     {
-        GameModeController.Instance.StartHostPhoton(ServerAddressField.text);
-        //gameObject.SetActive(false);
+        
+        Debug.Log(ServerAddressField.text.Length);
+        if (ServerAddressField.text.Length > 0)
+        {
+            GameModeController.Instance.StartHostPhoton(ServerAddressField.text);
+        }
+        else
+        {
+            Debug.Log("Please, fill the Room Name");
+        }
+
+
     }
 
     public void StarClient()
     {
-        GameModeController.Instance.StartClientPhoton(ServerAddressField.text);
-        //gameObject.SetActive(false);
+        if (ServerAddressField.text.Length > 0)
+        {
+            GameModeController.Instance.StartClientPhoton(ServerAddressField.text);
+        }
+        else
+        {
+            Debug.Log("Please, fill the Room Name");
+        }
     }
 }

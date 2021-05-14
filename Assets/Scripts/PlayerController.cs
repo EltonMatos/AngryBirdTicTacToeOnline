@@ -32,4 +32,10 @@ public class PlayerController : MonoBehaviour
         _playerIds = new List<ulong>();
         _currentPlayerIndex = 0;
     }
+
+    public void InitSetCurrentPlayer()
+    {
+        _currentPlayerIndex = 0;
+    }
+
 }
